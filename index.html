@@ -9,13 +9,19 @@
 body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;display:flex;justify-content:center;padding:0}
 .wrap{max-width:900px;margin:0;padding:8px 10px;width:100%;background:#faf5ee}
 
+/* 只读单元格不可选中 */
+.nosel{-webkit-user-select:none;user-select:none}
+/* 输入框可编辑 */
+input{background:#fafafa;border:1px solid #ddd;border-radius:3px;padding:2px 5px;font-size:13px;width:50px;font-family:inherit}
+input:focus{outline:none;border-color:#8b1a1a}
+
 /* ── 顶部 ── */
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .top h1{font-size:16px;color:#8b1a1a;font-weight:bold;letter-spacing:2px}
 .top .sub{font-size:11px;color:#888}
 .top .hint{font-size:10px;color:#aaa;text-align:right;line-height:1.4}
 
-/* ── 双列四柱 ── */
+/* ── 四柱面板 ── */
 .sz-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
 .sz-box{background:#fff;border:1px solid #d0c0b0;border-radius:6px;padding:8px}
 .sz-box .st{font-size:12px;color:#8b1a1a;font-weight:bold;border-bottom:1px solid #e0d0c0;padding-bottom:3px;margin-bottom:5px}
@@ -23,7 +29,6 @@ body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC
 .sz-row .l{color:#999;min-width:32px;text-align:right;font-size:11px}
 .sz-row .sv{color:#1a1a2e;font-weight:bold}
 .sz-row .sv.r{color:#8b1a1a}
-.sz-row input{background:#fafafa;border:1px solid #ddd;border-radius:3px;padding:2px 5px;font-size:13px;width:50px;font-family:inherit}
 .sz-note{font-size:10px;color:#bbb;margin-top:3px;line-height:1.3}
 
 /* ── 排盘结果 ── */
@@ -53,25 +58,15 @@ body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC
 .ke-tr.data .kc{padding:3px 4px;text-align:center;border-right:1px solid #f0e0d0;border-bottom:1px solid #f0e0d0}
 .ke-tr.data .kc:last-child{border-right:none}
 .ke-tr.data:last-child .kc{border-bottom:none}
-
 .kc .tp{font-size:17px;font-weight:bold;color:#1a1a2e;letter-spacing:1px}
 .kc .bt{font-size:13px;color:#555;margin-top:1px}
 .kc .god{font-size:12px;margin-top:1px;font-weight:bold}
 .kc .det{font-size:9px;color:#888;margin-top:1px;line-height:1.2}
 .kc .sx{font-size:9px;color:#aaa;margin-top:1px}
-
-/* 天将色 + 地支 */
 .g-she{color:#6a1b9a}.g-zhu{color:#c62828}.g-he{color:#2e7d32}
 .g-gou{color:#e65100}.g-qing{color:#1565c0}.g-kong{color:#546e7a}
 .g-bai{color:#37474f}.g-chang{color:#00695c}.g-xuan{color:#1a237e}
 .g-yin{color:#4a148c}.g-hou{color:#880e4f}.g-gui{color:#f9a825}
-
-/* ── 天盘五干 ── */
-.wg{background:#fff0e0;border:1px solid #c0392b;border-radius:4px;padding:5px 8px;margin-bottom:5px;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
-.wg .l{font-size:10px;color:#8b1a1a;font-weight:bold}
-.wg .item{background:#fff;border:1px solid #e0c0a0;border-radius:3px;padding:1px 6px;font-size:11px}
-.wg .item .il{color:#999}
-.wg .item .iv{color:#8b1a1a;font-weight:bold}
 
 /* ── 五行 ── */
 .wx{display:flex;gap:3px;margin:4px 0}
@@ -103,8 +98,8 @@ body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC
 <div class="sz-row"><span class="l">日</span><span class="sv r">壬寅</span><span class="l">时</span><span class="sv r">丁未</span></div>
 <div class="sz-row"><span class="l">性别</span><span class="sv">男</span><span class="l">本命</span><span class="sv">己卯</span></div>
 <div class="sz-note">当下正时 : 丙午 癸巳 壬寅 丁未</div></div></div>
-<div class="rp"><div><div class="r">天星排盘 · 四柱</div><div class="s">丙午年 癸巳月 壬寅日 丁未时</div></div><div class="v">丙癸壬丁　午巳寅未</div></div>
-<div class="tag-b">
+<div class="rp nosel"><div><div class="r">天星排盘 · 四柱</div><div class="s">丙午年 癸巳月 壬寅日 丁未时</div></div><div class="v">丙癸壬丁　午巳寅未</div></div>
+<div class="tag-b nosel">
 <span class="tag"><span class="tl">日德</span><span class="tv"> 月德</span></span>
 <span class="tag"><span class="tl">大耗</span><span class="tv"> 天赦</span></span>
 <span class="tag"><span class="tl">将星</span><span class="tv"> 文昌</span></span>
@@ -112,13 +107,32 @@ body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC
 <span class="tag"><span class="tl">天赦</span><span class="tv"> 天喜</span></span>
 <span class="tag"><span class="tl">文昌</span><span class="tv"> 生气</span></span>
 </div>
-<div class="zl">
+<div class="zl nosel">
 <div class="zl-item"><div class="zll">中黄</div><div class="zlv">中黄 复建</div></div>
 <div class="zl-item"><div class="zll">人遁</div><div class="zlv">人遁</div></div>
 <div class="zl-item"><div class="zll">天遁</div><div class="zlv">辰</div></div>
 <div class="zl-item"><div class="zll">旬遁</div><div class="zlv">甲午</div></div>
 </div>
-<div class="ke-table">
+<div style="display:flex;gap:4px;margin-bottom:6px">
+<div class="nosel" style="min-width:48px;display:flex;flex-direction:column;gap:3px">
+<div style="font-size:9px;color:#8b1a1a;text-align:center;padding:2px 0;font-weight:bold">天盘<br>五干</div>
+<div style="background:#fff0e0;border:1px solid #d0b0a0;border-radius:3px;padding:6px 4px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center">
+<div style="font-size:16px;font-weight:bold;color:#1a1a2e">丙</div>
+<div style="font-size:8px;color:#999">日干</div></div>
+<div style="background:#fff8f0;border:1px solid #d0b0a0;border-radius:3px;padding:6px 4px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center">
+<div style="font-size:16px;font-weight:bold;color:#1a1a2e">乙|</div>
+<div style="font-size:8px;color:#999">课1</div></div>
+<div style="background:#fff8f0;border:1px solid #d0b0a0;border-radius:3px;padding:6px 4px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center">
+<div style="font-size:16px;font-weight:bold;color:#1a1a2e">甲</div>
+<div style="font-size:8px;color:#999">课2</div></div>
+<div style="background:#fff8f0;border:1px solid #d0b0a0;border-radius:3px;padding:6px 4px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center">
+<div style="font-size:16px;font-weight:bold;color:#1a1a2e">乙</div>
+<div style="font-size:8px;color:#999">课3</div></div>
+<div style="background:#fff8f0;border:1px solid #d0b0a0;border-radius:3px;padding:6px 4px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center">
+<div style="font-size:16px;font-weight:bold;color:#1a1a2e">丙</div>
+<div style="font-size:8px;color:#999">课4</div></div>
+</div>
+<div class="ke-table" style="flex:1;margin:0">
 <div class="ke-tr header">
 <div class="kc">第一课</div>
 <div class="kc">第二课</div>
@@ -126,34 +140,22 @@ body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC
 <div class="kc">第四课</div>
 </div>
 <div class="ke-tr data">
-<div class="kc"><div class="tp">乙| 巳</div>
-<div class="det">天盘天干·地支</div></div>
-<div class="kc"><div class="tp">甲 午</div>
-<div class="det">天盘天干·地支</div></div>
-<div class="kc"><div class="tp">乙 未</div>
-<div class="det">天盘天干·地支</div></div>
-<div class="kc"><div class="tp">丙 申</div>
-<div class="det">天盘天干·地支</div></div>
+<div class="kc"><div class="tp">乙| 巳</div><div class="det">天盘</div></div>
+<div class="kc"><div class="tp">甲 午</div><div class="det">天盘</div></div>
+<div class="kc"><div class="tp">乙 未</div><div class="det">天盘</div></div>
+<div class="kc"><div class="tp">丙 申</div><div class="det">天盘</div></div>
 </div>
 <div class="ke-tr data">
-<div class="kc"><div class="bt">丙 午</div>
-<div class="det">地盘天干·地支</div></div>
-<div class="kc"><div class="bt">丁 未</div>
-<div class="det">地盘天干·地支</div></div>
-<div class="kc"><div class="bt">戊 申</div>
-<div class="det">地盘天干·地支</div></div>
-<div class="kc"><div class="bt">己 酉</div>
-<div class="det">地盘天干·地支</div></div>
+<div class="kc"><div class="bt">丙 午</div><div class="det">地盘</div></div>
+<div class="kc"><div class="bt">丁 未</div><div class="det">地盘</div></div>
+<div class="kc"><div class="bt">戊 申</div><div class="det">地盘</div></div>
+<div class="kc"><div class="bt">己 酉</div><div class="det">地盘</div></div>
 </div>
 <div class="ke-tr data">
-<div class="kc"><div class="god g-zhu">朱</div>
-<div class="det">天将: 庚</div></div>
-<div class="kc"><div class="god g-he">合</div>
-<div class="det">天将: 辛</div></div>
-<div class="kc"><div class="god g-gou">勾</div>
-<div class="det">天将: 壬</div></div>
-<div class="kc"><div class="god g-qing">青</div>
-<div class="det">天将: 癸</div></div>
+<div class="kc"><div class="god g-zhu">朱</div><div class="det">庚</div></div>
+<div class="kc"><div class="god g-he">合</div><div class="det">辛</div></div>
+<div class="kc"><div class="god g-gou">勾</div><div class="det">壬</div></div>
+<div class="kc"><div class="god g-qing">青</div><div class="det">癸</div></div>
 </div>
 <div class="ke-tr data">
 <div class="kc"><div class="sx">昼翔     妻财</div>
@@ -175,27 +177,14 @@ body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC
 <div class="kc"><div class="det" style="color:#666;font-size:11px">传送</div></div>
 <div class="kc"><div class="det" style="color:#666;font-size:11px">从魁</div></div>
 </div>
-</div>
-<div class="wg">
-<span class="l">天盘五干</span>
-<span class="item"><span class="il">日干</span> <span class="iv">丙</span></span>
-<span class="item"><span class="il">课1天盘</span> <span class="iv">乙|</span></span>
-<span class="item"><span class="il">课2天盘</span> <span class="iv">甲</span></span>
-<span class="item"><span class="il">课3天盘</span> <span class="iv">乙</span></span>
-<span class="item"><span class="il">课4天盘</span> <span class="iv">丙</span></span>
-<span class="item"><span class="il">课1地盘</span> <span class="iv">丙</span></span>
-<span class="item"><span class="il">课2地盘</span> <span class="iv">丁</span></span>
-<span class="item"><span class="il">课3地盘</span> <span class="iv">戊</span></span>
-<span class="item"><span class="il">课4地盘</span> <span class="iv">己</span></span>
-<span class="item" style="background:#fcf0e0"><span class="il">五鼠遁</span> <span class="iv">丙日 · 五鼠遁: 戊子起</span></span>
-</div>
-<div class="wx">
+</div></div>
+<div class="wx nosel">
 <span class="wx-huo">日干: 丙</span>
 <span class="wx-huo">旺: 火旺</span><span class="wx-tu">相: 土相</span>
 <span class="wx-mu">休: 木休</span><span class="wx-shui">囚: 水囚</span>
 <span class="wx-jin">死: 金死</span>
 </div>
-<div class="ss"><div class="ss-t">神煞明细</div><div class="tag-b">
+<div class="ss"><div class="ss-t">神煞明细</div><div class="tag-b nosel">
 <span class="tag"><span class="tl">亥</span> <span class="tv">庚</span></span>
 <span class="tag"><span class="tl">大耗</span> <span class="tv">天赦</span></span>
 <span class="tag"><span class="tl">子</span> <span class="tv">甲午</span></span>
