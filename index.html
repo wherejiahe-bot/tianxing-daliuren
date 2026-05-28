@@ -3,1040 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>天星2.0 · 大六壬排盘系统</title>
+<title>天星2.0 · 大六壬排盘</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;background:#0d1117;color:#c9d1d9;padding:16px}
-.container{max-width:1500px;margin:0 auto}
-h1{text-align:center;color:#ffd700;margin-bottom:4px;font-size:20px;letter-spacing:3px}
-.subtitle{text-align:center;color:#8b949e;font-size:12px;margin-bottom:16px}
-.card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px;margin-bottom:12px}
-.card-title{color:#ffd700;font-size:13px;font-weight:bold;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #30363d}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{border:1px solid #30363d;padding:3px 6px;text-align:center;white-space:nowrap}
-th{background:#1c2333;color:#ffd700;font-weight:600}
-td{background:#0d1117}
-tr:hover td{background:#1c2333}
-.table-wrap{overflow-x:auto;overflow-y:auto;max-height:480px}
-.header-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px}
-.header-item{background:#0d1117;border:1px solid #30363d;border-radius:4px;padding:5px 8px;text-align:center}
-.header-item .label{color:#8b949e;font-size:10px}
-.header-item .value{color:#ffd700;font-size:14px;font-weight:bold;margin-top:2px}
-.header-item .value.sub{color:#58a6ff;font-size:12px}
-.pan-grid{display:grid;gap:8px}
-.pan-row{display:flex;gap:6px;flex-wrap:wrap}
-.pan-cell{background:#0d1117;border:1px solid #30363d;border-radius:4px;padding:5px 8px;min-width:60px;flex:1;text-align:center}
-.pan-cell .label{color:#666;font-size:10px}
-.pan-cell .val{color:#c9d1d9;font-size:13px;font-weight:bold}
-.val.gold{color:#ffd700}.val.green{color:#7ee787}.val.red{color:#ff7b72}.val.blue{color:#79c0ff}.val.purple{color:#d2a8ff}
-.xlr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.xlr-card{background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:8px;text-align:center}
-.xlr-name{font-size:16px;font-weight:bold}
-.xlr-sub{font-size:11px;color:#8b949e;margin-top:3px}
-.daan .xlr-name{color:#7ee787}
-.liulian .xlr-name{color:#ffd700}
-.suxi .xlr-name{color:#79c0ff}
-.chikou .xlr-name{color:#ff7b72}
-.xiaoji .xlr-name{color:#d2a8ff}
-.kongwang .xlr-name{color:#666}
-.shensha-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
-.shensha-item{background:#0d1117;border:1px solid #21262d;border-radius:3px;padding:2px 4px;font-size:10px;text-align:center}
-.shensha-item .name{color:#8b949e;font-size:9px}
-.shensha-item .val{color:#c9d1d9}
-.note{color:#8b949e;font-size:10px;padding:4px 8px;line-height:1.5}
-.col-year{color:#ffd700;font-weight:bold}
-.col-gan{color:#79c0ff}
-.col-zhi{color:#7ee787}
-.col-nayin{color:#d2a8ff}
-.col-wang{color:#ff7b72}
-@media(max-width:768px){.xlr-grid{grid-template-columns:repeat(2,1fr)}.shensha-grid{grid-template-columns:repeat(3,1fr)}}
+body{font-family:'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;
+  background:#f0ebe3;color:#2c2c2c;padding:0;display:flex;justify-content:center}
+.container{max-width:860px;margin:0 auto;padding:12px;width:100%}
+
+/* ── 顶部：双列四柱 ── */
+.header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.header-row h1{font-size:18px;color:#a02020;font-weight:bold;letter-spacing:2px}
+.header-row .sub{font-size:12px;color:#666;margin-top:1px}
+
+.sizhu-panel{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.sizhu-box{background:#fff8f0;border:1px solid #dcc;border-radius:6px;padding:8px}
+.sizhu-box .stitle{font-size:12px;color:#a02020;font-weight:bold;border-bottom:1px solid #e0d0c0;padding-bottom:4px;margin-bottom:6px}
+.sizhu-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;font-size:13px}
+.sizhu-row .sl{color:#888;min-width:36px;text-align:right;font-size:11px}
+.sizhu-row .sv{color:#1a1a2e;font-weight:bold;min-width:40px}
+.sizhu-row .sv.gold{color:#a02020}
+.sizhu-row input{background:#fff;border:1px solid #ddd;border-radius:3px;padding:3px 6px;font-size:13px;width:60px;font-family:inherit}
+.sizhu-row input:focus{outline:none;border-color:#a02020}
+.sizhu-hint{font-size:10px;color:#aaa;line-height:1.4;margin-top:4px;padding-left:42px}
+
+/* ── 排盘结果 ── */
+.result-bar{background:#fff0e0;border:1px solid #c0392b;border-radius:6px;padding:6px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.result-bar .rlabel{font-size:11px;color:#a02020}
+.result-bar .rval{font-size:20px;font-weight:bold;color:#1a1a2e;letter-spacing:4px}
+.result-bar .rsub{font-size:12px;color:#555}
+
+/* ── 四课网格 ── */
+.ke-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px}
+.ke-cell{background:#fff6e8;border:2px solid #c0392b;border-radius:6px;padding:6px 4px;text-align:center;position:relative}
+.ke-label{font-size:9px;color:#a02020;position:absolute;top:-1px;left:5px;font-weight:bold}
+.ke-tian{font-size:18px;font-weight:bold;color:#1a1a2e;margin-top:3px;letter-spacing:2px}
+.ke-di{font-size:15px;color:#333;margin-top:1px;letter-spacing:2px}
+.ke-god{font-size:12px;margin-top:2px;font-weight:bold}
+.ke-detail{font-size:10px;color:#555;margin-top:2px}
+.god-she{color:#6a1b9a}.god-zhu{color:#c62828}.god-he{color:#2e7d32}
+.god-gou{color:#e65100}.god-qing{color:#1565c0}.god-kong{color:#546e7a}
+.god-bai{color:#37474f}.god-chang{color:#00695c}.god-xuan{color:#1a237e}
+.god-yin{color:#4a148c}.god-hou{color:#880e4f}.god-gui{color:#f9a825}
+
+/* ── 中黄人遁 ── */
+.info-row{display:flex;gap:6px;margin-bottom:8px}
+.info-cell{flex:1;background:#fff8f0;border:1px solid #ddd;border-radius:4px;padding:4px 8px;text-align:center;font-size:12px}
+.info-cell .il{color:#888;font-size:10px}
+.info-cell .iv{color:#a02020;font-weight:bold;font-size:14px}
+
+/* ── 神煞标签 ── */
+.tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.tag{background:#fff;border:1px solid #ddd;border-radius:3px;padding:1px 6px;font-size:10px}
+.tag .tl{color:#999}.tag .tv{color:#333}
+
+/* ── 五行 ── */
+.wx{display:flex;gap:4px;margin:4px 0}
+.wx span{font-size:10px;padding:1px 6px;border-radius:3px}
+.wx-mu{background:#e8f5e9;color:#2e7d32}.wx-huo{background:#fbe9e7;color:#c62828}
+.wx-tu{background:#fff3e0;color:#e65100}.wx-jin{background:#f3e5f5;color:#6a1b9a}
+.wx-shui{background:#e3f2fd;color:#1565c0}
+
+/* ── 神煞详细区 ── */
+.shensha-section{border-top:1px solid #e0d0c0;padding-top:6px;margin-top:4px}
+.shensha-title{font-size:11px;color:#a02020;font-weight:bold;margin-bottom:4px}
+@media(max-width:640px){.sizhu-panel{grid-template-columns:1fr}.ke-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>✦ 天星2.0 · 大六壬排盘 ✦</h1>
-<p class="subtitle">九天玄数 | 大六壬 | 小六壬 | 神煞集成 · 数据开放查询</p>
 
-<div class="card"><div class="card-title">📐 四柱信息</div><div class="header-grid">
-<div class="header-item"><div class="label">年</div>
+<div class="header-row">
+  <div><h1>天星2.0</h1><div class="sub">大六壬 · 九天玄数 · 神煞集成</div></div>
+  <div style="text-align:right;font-size:11px;color:#888;line-height:1.5">
+    三传: 中黄 旬遁 月将<br>贵神 人遁 天遁
+  </div>
 </div>
-<div class="header-item"><div class="label">月</div>
+
+<!-- 自选四柱 / 排盘四柱 -->
+<div class="sizhu-panel">
+<div class="sizhu-box">
+<div class="stitle">自选 四柱</div>
+
+<div class="sizhu-row"><span class="sl">年</span><input value="女" placeholder="年"><span class="sv gold">2002</span></div>
+<div class="sizhu-row"><span class="sl">年</span><span class="sv">丙午</span></div>
+<div class="sizhu-row"><span class="sl">月</span><span class="sv">癸巳</span></div>
+<div class="sizhu-row"><span class="sl">日</span><span class="sv">壬寅</span></div>
+<div class="sizhu-row"><span class="sl">时</span><span class="sv">丁未</span></div>
+<div class="sizhu-row"><span class="sl">性别</span><span class="sv">女</span><span class="sl">年份</span><span class="sv">2002</span></div>
+<div class="sizhu-row"><span class="sl">本命</span><span class="sv">壬午</span><span class="sl">行年</span><span class="sv">—</span></div>
+<div class="sizhu-hint">自选四柱删掉即为当下正时课</div>
 </div>
-<div class="header-item"><div class="label">日</div>
-</div>
-<div class="header-item"><div class="label">时</div>
-</div>
-<div class="header-item"><div class="label">月将</div>
-</div>
-<div class="header-item"><div class="label">性别</div>
-<div class="value">女</div>
-<div class="value sub">男</div>
-</div>
-<div class="header-item"><div class="label">年份</div>
-<div class="value">2002</div>
-<div class="value sub">1999</div>
-</div>
-<div class="header-item"><div class="label">本命</div>
-<div class="value">壬午</div>
-<div class="value sub">己卯</div>
-</div>
-<div class="header-item"><div class="label">行年</div>
-</div>
-<div class="header-item"><div class="label">旬</div><div class="value">旬</div></div>
-<div class="header-item"><div class="label">空</div><div class="value">空</div></div>
-<div class="header-item"><div class="label">月破</div><div class="value">月破</div></div>
-</div>
-<div class="note">排盘使用说明：                                                                                                                                   1. 自选四柱下拉输入: 年月日时 月将 性别 生年                                                                                              <br>2. 自选四柱信息删掉, 便是当下正时课                          3. 三传: 中黄 旬遁 月将 贵神 人遁 天遁</div>
-</div>
-<div class="card"><div class="card-title">🔮 日干神煞</div><div class="shensha-grid">
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">日德</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">大耗</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">将星</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">月德</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">天赦</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">文昌</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">成神</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">天喜</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">生气</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">天德</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">孤辰</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">劫煞</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">四煞</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">天鬼</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">长绳</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">支德</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">寡宿</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">丧车</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">官符</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">飞魂</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">丝麻</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">岁德</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">天喜   天耳</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">死气</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">贼神   转煞</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">丧魄</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">迷惑</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">喝散</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">奸门</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">飞符</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">阴神  邪神</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">闭口</span></div>
-<div class="shensha-item"><span class="name">AF</span><br><span class="val">癸</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">天解</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">桃花</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">飞廉</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">浴盆  天目</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">地解</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">月桃花</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">丧门</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">其它</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">火鬼</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">天廷</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">解神</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">年桃花</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">吊客</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">破碎</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">无成  四废</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">天诏</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">日解</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">疾病</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">岁虎</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">月破碎</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">月厌</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">皇书</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">旬首</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">天医</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">小耗</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">岁合</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">鬼门</span></div>
-<div class="shensha-item"><span class="name">AD</span><br><span class="val">寅</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">皇恩</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">旬奇</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">地医</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">大耗  岁破</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">岁阳</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">鬼宿</span></div>
-<div class="shensha-item"><span class="name">AD</span><br><span class="val">未</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">天城</span></div>
-<div class="shensha-item"><span class="name">AF</span><br><span class="val">申</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">出行</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">日医</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">灾煞  披麻</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">雨师</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">亡神</span></div>
-<div class="shensha-item"><span class="name">AD</span><br><span class="val">辛</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">天吏</span></div>
-<div class="shensha-item"><span class="name">AF</span><br><span class="val">寅</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">天马</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">血支</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">飞祸</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">进神</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">雷电</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">日马</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">血忌</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">墓神</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">退神</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">旧太岁</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">人门</span></div>
-<div class="shensha-item"><span class="name">AF</span><br><span class="val">申</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">月马</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">病符</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">死神</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">华盖</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">太岁</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">响动</span></div>
-<div class="shensha-item"><span class="name">AF</span><br><span class="val">庚</span></div>
-<div class="shensha-item"><span class="name">日德</span><br><span class="val">年马</span></div>
-<div class="shensha-item"><span class="name">大耗</span><br><span class="val">月病</span></div>
-<div class="shensha-item"><span class="name">将星</span><br><span class="val">年墓</span></div>
-<div class="shensha-item"><span class="name">AA</span><br><span class="val">谩语</span></div>
-<div class="shensha-item"><span class="name">AC</span><br><span class="val">未来太</span></div>
-<div class="shensha-item"><span class="name">AE</span><br><span class="val">天鸡</span></div>
+<div class="sizhu-box">
+<div class="stitle">排盘 四柱</div>
+<div class="sizhu-row"><span class="sl">年</span><span class="sv gold">丙午</span><span class="sl">月</span><span class="sv gold">癸巳</span></div>
+<div class="sizhu-row"><span class="sl">日</span><span class="sv gold">壬寅</span><span class="sl">时</span><span class="sv gold">丁未</span></div>
+<div class="sizhu-row"><span class="sl">月将</span><span class="sv">月将</span></div>
+<div class="sizhu-row"><span class="sl">本命</span><span class="sv">己卯</span></div>
 </div></div>
-<div class="card"><div class="card-title">☯ 小六壬掌诀</div><div class="xlr-grid">
-<div class="xlr-card daan">
-<div class="xlr-name">大安</div>
-<div class="xlr-sub">位: 1</div>
-<div class="xlr-sub">地: 寅</div>
-<div class="xlr-sub">天: 卯</div>
-<div class="xlr-sub">神: 青龙</div>
-<div class="xlr-sub" style="color:#666;">位: 寅,卯</div>
+<div class="result-bar">
+<div><div class="rlabel">天星排盘</div><div class="rsub">丙午年 癸巳月 壬寅日 丁未时</div></div>
+<div class="rval">丙癸壬丁 午巳寅未</div>
 </div>
-<div class="xlr-card liulian">
-<div class="xlr-name">留连</div>
-<div class="xlr-sub">位: 2</div>
-<div class="xlr-sub">地: 未</div>
-<div class="xlr-sub">天: 戌</div>
-<div class="xlr-sub">神: 朱雀</div>
-<div class="xlr-sub" style="color:#666;">位: 未,戌</div>
+<div class="tag-row">
+<span class="tag"><span class="tl">日德</span> <span class="tv">月德</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">天赦</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">文昌</span></span>
+<span class="tag"><span class="tl">月德</span> <span class="tv">成神</span></span>
+<span class="tag"><span class="tl">天赦</span> <span class="tv">天喜</span></span>
+<span class="tag"><span class="tl">文昌</span> <span class="tv">生气</span></span>
 </div>
-<div class="xlr-card suxi">
-<div class="xlr-name">速喜</div>
-<div class="xlr-sub">位: 3</div>
-<div class="xlr-sub">地: 午</div>
-<div class="xlr-sub">天: 巳</div>
-<div class="xlr-sub">神: 勾陈</div>
-<div class="xlr-sub" style="color:#666;">位: 巳,午</div>
+<div class="info-row">
+<div class="info-cell"><div class="il">中黄</div><div class="iv">中黄 复建</div></div>
+<div class="info-cell"><div class="il">人遁</div><div class="iv">人遁</div></div>
+<div class="info-cell"><div class="il">天遁</div><div class="iv">辰</div></div>
+<div class="info-cell"><div class="il">旬遁</div><div class="iv">甲午</div></div>
 </div>
-<div class="xlr-card chikou">
-<div class="xlr-name">赤口</div>
-<div class="xlr-sub">位: 4</div>
-<div class="xlr-sub">地: 酉</div>
-<div class="xlr-sub">天: 申</div>
-<div class="xlr-sub">神: 白虎</div>
-<div class="xlr-sub" style="color:#666;">位: 申,酉</div>
+<div class="ke-grid">
+<div class="ke-cell">
+<div class="ke-label">第一课</div>
+<div class="ke-tian">乙|　午</div>
+<div class="ke-di">丙　朱</div>
+<div class="ke-god god-zhu">庚</div>
+<div class="ke-detail">昼翔     妻财</div>
 </div>
-<div class="xlr-card xiaoji">
-<div class="xlr-name">小吉</div>
-<div class="xlr-sub">位: 5</div>
-<div class="xlr-sub">地: 子</div>
-<div class="xlr-sub">天: 亥</div>
-<div class="xlr-sub">神: 玄武</div>
-<div class="xlr-sub" style="color:#666;">位: 子,亥</div>
+<div class="ke-cell">
+<div class="ke-label">第二课</div>
+<div class="ke-tian">甲　未</div>
+<div class="ke-di">丁　合</div>
+<div class="ke-god god-he">辛</div>
+<div class="ke-detail">升堂     妻财</div>
 </div>
-<div class="xlr-card kongwang">
-<div class="xlr-name">空亡</div>
-<div class="xlr-sub">位: 6</div>
-<div class="xlr-sub">地: 丑</div>
-<div class="xlr-sub">天: 辰</div>
-<div class="xlr-sub">神: 螣蛇</div>
-<div class="xlr-sub" style="color:#666;">位: 丑,辰</div>
+<div class="ke-cell">
+<div class="ke-label">第三课</div>
+<div class="ke-tian">乙　申</div>
+<div class="ke-di">戊　勾</div>
+<div class="ke-god god-gou">壬</div>
+<div class="ke-detail">入驿     官鬼</div>
 </div>
+<div class="ke-cell">
+<div class="ke-label">第四课</div>
+<div class="ke-tian">丙　酉</div>
+<div class="ke-di">己　青</div>
+<div class="ke-god god-qing">癸</div>
+<div class="ke-detail">伤鳞     父母</div>
+</div>
+</div>
+<div style="text-align:center;font-size:11px;color:#666;margin-bottom:6px">
+天盘五干: 丙 庚 | 丁 辛 | 戊 壬 | 己 癸
+</div>
+<div class="wx">
+<span class="wx-huo">日干: 丙</span>
+<span class="wx-huo">旺: 火旺</span><span class="wx-tu">相: 土相</span>
+<span class="wx-mu">休: 木休</span><span class="wx-shui">囚: 水囚</span>
+<span class="wx-jin">死: 金死</span>
+</div>
+<div class="shensha-section">
+<div class="shensha-title">神煞明细</div>
+<div class="tag-row">
+<span class="tag"><span class="tl">亥</span> <span class="tv">庚</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">甲午</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">寅</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">寅</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">丑</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">卯</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">辛</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">亥</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">未</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">辰</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">子</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">卯丙</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">天喜   天耳</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">丑</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">死气</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">酉</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">奸门</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">巳</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">飞符</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">酉</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">寅</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">桃花</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">卯</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">飞廉</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">未</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">酉</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">月桃花</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">午</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">丧门</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">戌</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">年桃花</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">卯</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">吊客</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">辰</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">丑</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">疾病</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">岁虎</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">寅</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">午</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">天医</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">未</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">小耗</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">亥</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">子</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">地医</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">丑</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">大耗  岁破</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">子</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">日医</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">未</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">灾煞  披麻</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">子</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">子</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">血支</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">辰</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">飞祸</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">寅</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">血忌</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">墓神</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">戌</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">病符</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">巳</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">死神</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">亥</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">月病</span></span>
+<span class="tag"><span class="tl">子</span> <span class="tv">辰</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">年墓</span></span>
+<span class="tag"><span class="tl">午</span> <span class="tv">丑</span></span>
 </div></div>
-<div class="card"><div class="card-title">🌌 天地人 · 八卦 · 玄数</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">卦</div><div class="val blue">乾</div></div>
-<div class="pan-cell"><div class="label">数</div><div class="val green">111</div></div>
-</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">卦</div><div class="val blue">兑</div></div>
-<div class="pan-cell"><div class="label">数</div><div class="val green">011</div></div>
-</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">神</div><div class="val purple">青龙</div></div>
-</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">位</div><div class="val gold">天</div></div>
-<div class="pan-cell"><div class="label">神</div><div class="val purple">朱雀</div></div>
-</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">位</div><div class="val gold">地</div></div>
-<div class="pan-cell"><div class="label">神</div><div class="val purple">勾陈</div></div>
-</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">位</div><div class="val gold">人</div></div>
-<div class="pan-cell"><div class="label">神</div><div class="val purple">白虎</div></div>
-</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">神</div><div class="val purple">玄武</div></div>
-</div>
-<div class="pan-row">
-<div class="pan-cell"><div class="label">神</div><div class="val purple">螣蛇</div></div>
-</div>
-</div>
-<div class="card"><div class="card-title">📅 六十甲子 · 天星年表</div>
-<div class="table-wrap"><table>
-<thead><tr><th>年</th><th>干支</th><th>月柱</th><th>日柱</th><th>时柱</th><th>纳音</th><th>旺/休/囚</th><th>神</th><th>将</th><th>小六壬</th><th>地</th><th>天星</th></tr></thead><tbody>
-<tr><td class="col-year">2023</td><td class="col-gan">癸卯</td><td>己巳</td><td>己巳</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>地</td><td>卯</td><td class="col-gan">辰巳午</td></tr>
-<tr><td class="col-year">2024</td><td class="col-gan">甲辰</td><td>庚午</td><td>戊辰</td><td></td><td class="col-nayin">大安</td><td class="col-wang"></td><td></td><td>青龙</td><td>寅</td><td>辰</td><td class="col-gan">辰午申</td></tr>
-<tr><td class="col-year">2025</td><td class="col-gan">乙巳</td><td>辛未</td><td>丁卯</td><td></td><td class="col-nayin">留连</td><td class="col-wang"></td><td></td><td>朱雀</td><td>未</td><td>巳</td><td class="col-gan">申亥寅</td></tr>
-<tr><td class="col-year">2026</td><td class="col-gan">丙午</td><td>壬申</td><td>丙寅</td><td></td><td class="col-nayin">速喜</td><td class="col-wang">#VALUE!</td><td></td><td>勾陈</td><td>午</td><td>午</td><td class="col-gan">申午午</td></tr>
-<tr><td class="col-year">2027</td><td class="col-gan">丁未</td><td>癸酉</td><td>乙丑</td><td></td><td class="col-nayin">赤口</td><td class="col-wang">#VALUE!</td><td></td><td>白虎</td><td>酉</td><td>未</td><td class="col-gan">子巳戌</td></tr>
-<tr><td class="col-year">2028</td><td class="col-gan">戊申</td><td>甲戌</td><td>甲子</td><td></td><td class="col-nayin">小吉</td><td class="col-wang">#VALUE!</td><td></td><td>玄武</td><td>子</td><td>申</td><td class="col-gan">寅申寅</td></tr>
-<tr><td class="col-year">2029</td><td class="col-gan">己酉</td><td>乙亥</td><td>癸亥</td><td></td><td class="col-nayin">空亡</td><td class="col-wang"></td><td>岁</td><td>螣蛇</td><td>丑</td><td>酉</td><td class="col-gan">酉辰亥</td></tr>
-<tr><td class="col-year">2030</td><td class="col-gan">庚戌</td><td>丙子</td><td>壬戌</td><td></td><td class="col-nayin">申</td><td class="col-wang"></td><td>甲</td><td>青龙</td><td>亥</td><td>戌</td><td class="col-gan">戌午寅</td></tr>
-<tr><td class="col-year">2031</td><td class="col-gan">辛亥</td><td>丁丑</td><td>辛酉</td><td></td><td class="col-nayin">亥</td><td class="col-wang"></td><td>庚</td><td>朱雀</td><td>子</td><td>亥</td><td class="col-gan">丑亥亥</td></tr>
-<tr><td class="col-year">2032</td><td class="col-gan">壬子</td><td>戊寅</td><td>庚申</td><td></td><td class="col-nayin">寅</td><td class="col-wang"></td><td>丙</td><td>勾陈</td><td>丑</td><td>子</td><td class="col-gan">巳丑酉</td></tr>
-<tr><td class="col-year">2033</td><td class="col-gan">癸丑</td><td>己卯</td><td>己未</td><td></td><td class="col-nayin">巳</td><td class="col-wang"></td><td>壬</td><td>白虎</td><td>寅</td><td>丑</td><td class="col-gan">丑戌未</td></tr>
-<tr><td class="col-year">2034</td><td class="col-gan">甲寅</td><td>庚辰</td><td>戊午</td><td></td><td class="col-nayin">申</td><td class="col-wang"></td><td>戊</td><td>玄武</td><td>卯</td><td>寅</td><td class="col-gan">亥酉未</td></tr>
-<tr><td class="col-year">2035</td><td class="col-gan">乙卯</td><td>辛巳</td><td>丁巳</td><td></td><td class="col-nayin">亥</td><td class="col-wang"></td><td>甲</td><td>螣蛇</td><td>辰</td><td>卯</td><td class="col-gan">子亥戌</td></tr>
-<tr><td class="col-year">2036</td><td class="col-gan">丙辰</td><td>壬午</td><td>丙辰</td><td></td><td class="col-nayin">寅</td><td class="col-wang"></td><td>庚</td><td></td><td>巳</td><td>辰</td><td class="col-gan">辰丑戌</td></tr>
-<tr><td class="col-year">2037</td><td class="col-gan">丁巳</td><td>癸未</td><td>乙卯</td><td></td><td class="col-nayin">巳</td><td class="col-wang"></td><td>丙</td><td></td><td>午</td><td>巳</td><td class="col-gan">寅卯辰</td></tr>
-<tr><td class="col-year">2038</td><td class="col-gan">戊午</td><td>甲申</td><td>甲寅</td><td></td><td class="col-nayin">申</td><td class="col-wang"></td><td>壬</td><td></td><td>未</td><td>午</td><td class="col-gan">申戌子</td></tr>
-<tr><td class="col-year">2039</td><td class="col-gan">己未</td><td>乙酉</td><td>癸丑</td><td></td><td class="col-nayin">亥</td><td class="col-wang"></td><td>戊</td><td></td><td>申</td><td>未</td><td class="col-gan">未戌丑</td></tr>
-<tr><td class="col-year">2040</td><td class="col-gan">庚申</td><td>丙戌</td><td>壬子</td><td></td><td class="col-nayin">寅</td><td class="col-wang"></td><td></td><td></td><td>酉</td><td>申</td><td class="col-gan">酉丑巳</td></tr>
-<tr><td class="col-year">2041</td><td class="col-gan">辛酉</td><td>丁亥</td><td>辛亥</td><td></td><td class="col-nayin">巳</td><td class="col-wang"></td><td></td><td></td><td>小吉</td><td>子</td><td class="col-gan">寅未子</td></tr>
-<tr><td class="col-year">2042</td><td class="col-gan">壬戌</td><td>戊子</td><td>庚戌</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>空亡</td><td>丑</td><td class="col-gan">戌辰戌</td></tr>
-<tr><td class="col-year">2043</td><td class="col-gan">癸亥</td><td>己丑</td><td>己酉</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>大安</td><td>寅</td><td class="col-gan">卯戌巳</td></tr>
-<tr><td class="col-year">2044</td><td class="col-gan">甲子</td><td>庚寅</td><td>戊申</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>大安</td><td>卯</td><td class="col-gan">未卯亥</td></tr>
-<tr><td class="col-year">2045</td><td class="col-gan">乙丑</td><td>辛卯</td><td>丁未</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>空亡</td><td>辰</td><td class="col-gan">丑戌未</td></tr>
-<tr><td class="col-year">2046</td><td class="col-gan">丙寅</td><td>壬辰</td><td>丙午</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>速喜</td><td>巳</td><td class="col-gan">酉未巳</td></tr>
-<tr><td class="col-year">2047</td><td class="col-gan">丁卯</td><td>癸巳</td><td>乙巳</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>速喜</td><td>午</td><td class="col-gan">戌酉申</td></tr>
-<tr><td class="col-year">2048</td><td class="col-gan">戊辰</td><td>甲午</td><td>甲辰</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>留连</td><td>未</td><td class="col-gan">辰亥巳</td></tr>
-<tr><td class="col-year">2049</td><td class="col-gan">己巳</td><td>乙未</td><td>癸卯</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>赤口</td><td>申</td><td class="col-gan">丑寅卯</td></tr>
-<tr><td class="col-year">2050</td><td class="col-gan">庚午</td><td>丙申</td><td>壬寅</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>赤口</td><td>酉</td><td class="col-gan">申戌子</td></tr>
-<tr><td class="col-year">2051</td><td class="col-gan">辛未</td><td>丁酉</td><td>辛丑</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>留连</td><td>戌</td><td class="col-gan">未戌丑</td></tr>
-<tr><td class="col-year">2052</td><td class="col-gan">壬申</td><td>戊戌</td><td>庚子</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td>小吉</td><td>亥</td><td class="col-gan">未亥卯</td></tr>
-<tr><td class="col-year">2053</td><td class="col-gan">癸酉</td><td>己亥</td><td>己亥</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>酉</td><td class="col-gan">寅未子</td></tr>
-<tr><td class="col-year">2054</td><td class="col-gan">甲戌</td><td>庚子</td><td>戊戌</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>戌</td><td class="col-gan">巳亥巳</td></tr>
-<tr><td class="col-year">2055</td><td class="col-gan">乙亥</td><td>辛丑</td><td>丁酉</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>亥</td><td class="col-gan">午丑申</td></tr>
-<tr><td class="col-year">2056</td><td class="col-gan">丙子</td><td>壬寅</td><td>丙申</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>子</td><td class="col-gan">巳丑酉</td></tr>
-<tr><td class="col-year">2057</td><td class="col-gan">丁丑</td><td>癸卯</td><td>乙未</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>丑</td><td class="col-gan">丑戌未</td></tr>
-<tr><td class="col-year">2058</td><td class="col-gan">戊寅</td><td>甲辰</td><td>甲午</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>寅</td><td class="col-gan">未巳卯</td></tr>
-<tr><td class="col-year">2059</td><td class="col-gan">己卯</td><td>乙巳</td><td>癸巳</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>卯</td><td class="col-gan">申未午</td></tr>
-<tr><td class="col-year">2060</td><td class="col-gan">庚辰</td><td>丙午</td><td>壬辰</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>辰</td><td class="col-gan">辰酉卯</td></tr>
-<tr><td class="col-year">2061</td><td class="col-gan">辛巳</td><td>丁未</td><td>辛卯</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>巳</td><td class="col-gan">亥子丑</td></tr>
-<tr><td class="col-year">2062</td><td class="col-gan">壬午</td><td>戊申</td><td>庚寅</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>午</td><td class="col-gan">申戌子</td></tr>
-<tr><td class="col-year">2063</td><td class="col-gan">癸未</td><td>己酉</td><td>己丑</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>未</td><td class="col-gan">未戌丑</td></tr>
-<tr><td class="col-year">2064</td><td class="col-gan">甲申</td><td>庚戌</td><td>戊子</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>申</td><td class="col-gan">申子辰</td></tr>
-<tr><td class="col-year">2065</td><td class="col-gan">乙酉</td><td>辛亥</td><td>丁亥</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>酉</td><td class="col-gan">未子巳</td></tr>
-<tr><td class="col-year">2066</td><td class="col-gan">丙戌</td><td>壬子</td><td>丙戌</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>戌</td><td class="col-gan">卯酉卯</td></tr>
-<tr><td class="col-year">2067</td><td class="col-gan">丁亥</td><td>癸丑</td><td>乙酉</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>亥</td><td class="col-gan">亥午丑</td></tr>
-<tr><td class="col-year">2068</td><td class="col-gan">戊子</td><td>甲寅</td><td>甲申</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>子</td><td class="col-gan">卯亥未</td></tr>
-<tr><td class="col-year">2069</td><td class="col-gan">己丑</td><td>乙卯</td><td>癸未</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>丑</td><td class="col-gan">丑戌未</td></tr>
-<tr><td class="col-year">2070</td><td class="col-gan">庚寅</td><td>丙辰</td><td>壬午</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>寅</td><td class="col-gan">亥寅巳</td></tr>
-<tr><td class="col-year">2071</td><td class="col-gan">辛卯</td><td>丁巳</td><td>辛巳</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>卯</td><td class="col-gan">戌卯午</td></tr>
-<tr><td class="col-year">2072</td><td class="col-gan">壬辰</td><td>戊午</td><td>庚辰</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>辰</td><td class="col-gan">辰未丑</td></tr>
-<tr><td class="col-year">2073</td><td class="col-gan">癸巳</td><td>己未</td><td>己卯</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>巳</td><td class="col-gan">酉戌亥</td></tr>
-<tr><td class="col-year">2074</td><td class="col-gan">甲午</td><td>庚申</td><td>戊寅</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>午</td><td class="col-gan">申戌子</td></tr>
-<tr><td class="col-year">2075</td><td class="col-gan">乙未</td><td>辛酉</td><td>丁丑</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>未</td><td class="col-gan">未戌丑</td></tr>
-<tr><td class="col-year">2076</td><td class="col-gan">丙申</td><td>壬戌</td><td>丙子</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>申</td><td class="col-gan">亥卯未</td></tr>
-<tr><td class="col-year">2077</td><td class="col-gan">丁酉</td><td>癸亥</td><td>乙亥</td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>酉</td><td class="col-gan">巳戌卯</td></tr>
-<tr><td class="col-year">2078</td><td class="col-gan">戊戌</td><td></td><td></td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>戌</td><td class="col-gan">戌辰戌</td></tr>
-<tr><td class="col-year">2079</td><td class="col-gan">己亥</td><td></td><td></td><td></td><td class="col-nayin"></td><td class="col-wang"></td><td></td><td></td><td></td><td>亥</td><td class="col-gan">午丑申</td></tr>
-</tbody></table></div></div>
-<div class="card"><div class="card-title">📜 大六壬 · 天将神煞全景</div>
-<div class="table-wrap"><table><thead><tr>
-<th>旺</th>
-<th>长</th>
-<th>钤</th>
-<th>音</th>
-<th>卦</th>
-<th>三宫</th>
-<th>星</th>
-<th>干</th>
-<th>神</th>
-<th>支</th>
-<th>互</th>
-<th>门</th>
-<th>符</th>
-<th>登车</th>
-<th>当门</th>
-<th>安巢</th>
-<th>入室</th>
-<th>临门</th>
-<th>驱雷</th>
-<th>乘侮</th>
-<th>临门</th>
-<th>遗冠</th>
-<th>窥户</th>
-<th>微行</th>
-<th>临门</th>
-<th>太</th>
-<th>冲</th>
-<th>乙</th>
-<th>乙</th>
-<th>丙</th>
-<th>卯</th>
-<th>辰</th>
-<th>合</th>
-<th>4</th>
-<th>卯</th>
-<th>驱雷</th>
-<th>安巢</th>
-<th>临门</th>
-<th>临门</th>
-</tr></thead><tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>天牢</td>
-<td>象龙</td>
-<td>投网</td>
-<td>违礼</td>
-<td>升堂</td>
-<td>飞天</td>
-<td>孝女</td>
-<td>噬人</td>
-<td>佩印</td>
-<td>失路</td>
-<td>造庭</td>
-<td>毁妆</td>
-<td>天</td>
-<td>罡</td>
-<td>丙</td>
-<td>丙</td>
-<td>戊</td>
-<td>巳</td>
-<td>巳</td>
-<td>勾</td>
-<td>5</td>
-<td>辰</td>
-<td>飞天</td>
-<td>投网</td>
-<td>升堂</td>
-<td>噬人</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>受贡</td>
-<td>乘雾</td>
-<td>昼翔</td>
-<td>不谐</td>
-<td>铸印</td>
-<td>掩目</td>
-<td>火炉</td>
-<td>焚身</td>
-<td>铸印</td>
-<td>反顾</td>
-<td>伏枕</td>
-<td>裸体</td>
-<td>太</td>
-<td>乙</td>
-<td>丁</td>
-<td>丁</td>
-<td>庚</td>
-<td>午</td>
-<td>未</td>
-<td>青</td>
-<td>6</td>
-<td>巳</td>
-<td>掩目</td>
-<td>昼翔</td>
-<td>铸印</td>
-<td>焚身</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>受贡</td>
-<td>飞空</td>
-<td>衔符</td>
-<td>升堂</td>
-<td>反目</td>
-<td>烧身</td>
-<td>马死</td>
-<td>焚身</td>
-<td>乘轩</td>
-<td>截路</td>
-<td>脱巾</td>
-<td>伏枕</td>
-<td>胜</td>
-<td>光</td>
-<td>戊</td>
-<td>戊</td>
-<td>壬</td>
-<td>巳</td>
-<td>巳</td>
-<td>空</td>
-<td>7</td>
-<td>午</td>
-<td>烧身</td>
-<td>衔符</td>
-<td>反目</td>
-<td>焚身</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>列席</td>
-<td>入林</td>
-<td>临坟</td>
-<td>纳采</td>
-<td>入驿</td>
-<td>在陆</td>
-<td>兴灾</td>
-<td>在野</td>
-<td>捧觞</td>
-<td>不成</td>
-<td>观书</td>
-<td>沐浴</td>
-<td>小</td>
-<td>吉</td>
-<td>己</td>
-<td>己</td>
-<td>甲</td>
-<td>午</td>
-<td>未</td>
-<td>白</td>
-<td>8</td>
-<td>未</td>
-<td>在陆</td>
-<td>临坟</td>
-<td>入驿</td>
-<td>在野</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>小吉</td>
-<td></td>
-<td></td>
-<td></td>
-<td>子</td>
-<td></td>
-<td></td>
-<td></td>
-<td>移途</td>
-<td>衔剑</td>
-<td>励嘴</td>
-<td>结发</td>
-<td>趋户</td>
-<td>伤鳞</td>
-<td>妄言</td>
-<td>衔牒</td>
-<td>衔杯</td>
-<td>折足</td>
-<td>执政</td>
-<td>修容</td>
-<td>传</td>
-<td>送</td>
-<td>庚</td>
-<td>庚</td>
-<td>丙</td>
-<td>申</td>
-<td>申</td>
-<td>常</td>
-<td>9</td>
-<td>申</td>
-<td>伤鳞</td>
-<td>励嘴</td>
-<td>趋户</td>
-<td>衔牒</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>空亡</td>
-<td></td>
-<td></td>
-<td></td>
-<td>丑</td>
-<td></td>
-<td></td>
-<td></td>
-<td>入室</td>
-<td>露齿</td>
-<td>夜噪</td>
-<td>私窜</td>
-<td>披刃</td>
-<td>摧角</td>
-<td>走失</td>
-<td>临门</td>
-<td>券书</td>
-<td>拔剑</td>
-<td>闭户</td>
-<td>倚户</td>
-<td>从</td>
-<td>魁</td>
-<td>辛</td>
-<td>辛</td>
-<td>戊</td>
-<td>酉</td>
-<td>戌</td>
-<td>玄</td>
-<td>10</td>
-<td>酉</td>
-<td>摧角</td>
-<td>夜噪</td>
-<td>披刃</td>
-<td>临门</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>大安</td>
-<td></td>
-<td></td>
-<td></td>
-<td>寅</td>
-<td></td>
-<td></td>
-<td></td>
-<td>地狱</td>
-<td>入墓</td>
-<td>投网</td>
-<td>亡羞</td>
-<td>下狱</td>
-<td>登魁</td>
-<td>犯上</td>
-<td>落井</td>
-<td>逆命</td>
-<td>遭囚</td>
-<td>被察</td>
-<td>褰帷</td>
-<td>河</td>
-<td>魁</td>
-<td>壬</td>
-<td>壬</td>
-<td>庚</td>
-<td>亥</td>
-<td>亥</td>
-<td>阴</td>
-<td>11</td>
-<td>戌</td>
-<td>登魁</td>
-<td>投网</td>
-<td>下狱</td>
-<td>落井</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>大安</td>
-<td></td>
-<td></td>
-<td></td>
-<td>卯</td>
-<td></td>
-<td></td>
-<td></td>
-<td>绛宫</td>
-<td>坠水</td>
-<td>入水</td>
-<td>待命</td>
-<td>褰裳</td>
-<td>游江</td>
-<td>诬词</td>
-<td>溺水</td>
-<td>征召</td>
-<td>伏藏</td>
-<td>裸形</td>
-<td>治事</td>
-<td>登</td>
-<td>明</td>
-<td>癸</td>
-<td>癸</td>
-<td>壬</td>
-<td>子</td>
-<td>丑</td>
-<td>后</td>
-<td>12</td>
-<td>亥</td>
-<td>游江</td>
-<td>入水</td>
-<td>褰裳</td>
-<td>溺水</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>空亡</td>
-<td></td>
-<td></td>
-<td></td>
-<td>辰</td>
-<td></td>
-<td></td>
-<td></td>
-<td>贵</td>
-<td>螣</td>
-<td>朱</td>
-<td>合</td>
-<td>勾</td>
-<td>青</td>
-<td>空</td>
-<td>白</td>
-<td>常</td>
-<td>玄</td>
-<td>阴</td>
-<td>后</td>
-<td></td>
-<td></td>
-<td>甲</td>
-<td>甲|</td>
-<td>甲</td>
-<td></td>
-<td></td>
-<td>贵</td>
-<td>13</td>
-<td>子</td>
-<td>青龙</td>
-<td>朱雀</td>
-<td>勾陈</td>
-<td>白虎</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>速喜</td>
-<td></td>
-<td></td>
-<td></td>
-<td>巳</td>
-<td></td>
-<td></td>
-<td></td>
-<td>己</td>
-<td>丁</td>
-<td>丙</td>
-<td>乙</td>
-<td>戊</td>
-<td>甲</td>
-<td>戊</td>
-<td>庚</td>
-<td>己</td>
-<td>癸</td>
-<td>辛</td>
-<td>壬</td>
-<td></td>
-<td></td>
-<td>乙</td>
-<td>乙|</td>
-<td>丙</td>
-<td></td>
-<td></td>
-<td>螣</td>
-<td>14</td>
-<td>丑</td>
-<td>甲寅</td>
-<td>丁午</td>
-<td>戊辰</td>
-<td>庚申</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>速喜</td>
-<td></td>
-<td></td>
-<td></td>
-<td>午</td>
-<td></td>
-<td></td>
-<td></td>
-<td>丑</td>
-<td>巳</td>
-<td>午</td>
-<td>卯</td>
-<td>辰</td>
-<td>寅</td>
-<td>戌</td>
-<td>申</td>
-<td>未</td>
-<td>亥</td>
-<td>酉</td>
-<td>子</td>
-<td></td>
-<td></td>
-<td>丙</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>朱</td>
-<td>15</td>
-<td>寅</td>
-<td></td>
-<td></td>
-<td>天空</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>留连</td>
-<td></td>
-<td></td>
-<td></td>
-<td>未</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>丁</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>合</td>
-<td>16</td>
-<td>卯</td>
-<td></td>
-<td></td>
-<td>戊戌</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>赤口</td>
-<td></td>
-<td></td>
-<td></td>
-<td>申</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>戊</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>勾</td>
-<td>17</td>
-<td>辰</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>赤口</td>
-<td></td>
-<td></td>
-<td></td>
-<td>酉</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>己</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>青</td>
-<td>18</td>
-<td>巳</td>
-<td>钤法</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>留连</td>
-<td></td>
-<td></td>
-<td></td>
-<td>戌</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>庚</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>空</td>
-<td>19</td>
-<td>午</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>小吉</td>
-<td></td>
-<td></td>
-<td></td>
-<td>亥</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>辛</td>
-<td>年</td>
-<td>虎</td>
-<td></td>
-<td></td>
-<td>白</td>
-<td>20</td>
-<td>未</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table></div></div>
-<div style="text-align:center;color:#484f58;font-size:11px;padding:16px 0;">
-天星2.0 · 大六壬排盘系统 · GitHub Pages 版 · By 霎哈嘉瑜伽修习者
-</div>
-</div>
-</body>
-</html>
+<div style="text-align:center;color:#bbb;font-size:10px;margin-top:10px;padding:8px 0">天星2.0 · 霎哈嘉瑜伽修习者</div>
+</div></body></html>
