@@ -6,150 +6,188 @@
 <title>天星2.0 · 大六壬排盘</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;
-  background:#f0ebe3;color:#2c2c2c;padding:0;display:flex;justify-content:center}
-.container{max-width:860px;margin:0 auto;padding:12px;width:100%}
+body{background:#f5efe0;color:#2c2c2c;font-family:'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;display:flex;justify-content:center;padding:0}
+.wrap{max-width:900px;margin:0;padding:8px 10px;width:100%;background:#faf5ee}
 
-/* ── 顶部：双列四柱 ── */
-.header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.header-row h1{font-size:18px;color:#a02020;font-weight:bold;letter-spacing:2px}
-.header-row .sub{font-size:12px;color:#666;margin-top:1px}
+/* ── 顶部 ── */
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.top h1{font-size:16px;color:#8b1a1a;font-weight:bold;letter-spacing:2px}
+.top .sub{font-size:11px;color:#888}
+.top .hint{font-size:10px;color:#aaa;text-align:right;line-height:1.4}
 
-.sizhu-panel{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.sizhu-box{background:#fff8f0;border:1px solid #dcc;border-radius:6px;padding:8px}
-.sizhu-box .stitle{font-size:12px;color:#a02020;font-weight:bold;border-bottom:1px solid #e0d0c0;padding-bottom:4px;margin-bottom:6px}
-.sizhu-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;font-size:13px}
-.sizhu-row .sl{color:#888;min-width:36px;text-align:right;font-size:11px}
-.sizhu-row .sv{color:#1a1a2e;font-weight:bold;min-width:40px}
-.sizhu-row .sv.gold{color:#a02020}
-.sizhu-row input{background:#fff;border:1px solid #ddd;border-radius:3px;padding:3px 6px;font-size:13px;width:60px;font-family:inherit}
-.sizhu-row input:focus{outline:none;border-color:#a02020}
-.sizhu-hint{font-size:10px;color:#aaa;line-height:1.4;margin-top:4px;padding-left:42px}
+/* ── 双列四柱 ── */
+.sz-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.sz-box{background:#fff;border:1px solid #d0c0b0;border-radius:6px;padding:8px}
+.sz-box .st{font-size:12px;color:#8b1a1a;font-weight:bold;border-bottom:1px solid #e0d0c0;padding-bottom:3px;margin-bottom:5px}
+.sz-row{display:flex;align-items:center;gap:5px;margin-bottom:2px;font-size:13px}
+.sz-row .l{color:#999;min-width:32px;text-align:right;font-size:11px}
+.sz-row .sv{color:#1a1a2e;font-weight:bold}
+.sz-row .sv.r{color:#8b1a1a}
+.sz-row input{background:#fafafa;border:1px solid #ddd;border-radius:3px;padding:2px 5px;font-size:13px;width:50px;font-family:inherit}
+.sz-note{font-size:10px;color:#bbb;margin-top:3px;line-height:1.3}
 
 /* ── 排盘结果 ── */
-.result-bar{background:#fff0e0;border:1px solid #c0392b;border-radius:6px;padding:6px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.result-bar .rlabel{font-size:11px;color:#a02020}
-.result-bar .rval{font-size:20px;font-weight:bold;color:#1a1a2e;letter-spacing:4px}
-.result-bar .rsub{font-size:12px;color:#555}
-
-/* ── 四课网格 ── */
-.ke-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px}
-.ke-cell{background:#fff6e8;border:2px solid #c0392b;border-radius:6px;padding:6px 4px;text-align:center;position:relative}
-.ke-label{font-size:9px;color:#a02020;position:absolute;top:-1px;left:5px;font-weight:bold}
-.ke-tian{font-size:18px;font-weight:bold;color:#1a1a2e;margin-top:3px;letter-spacing:2px}
-.ke-di{font-size:15px;color:#333;margin-top:1px;letter-spacing:2px}
-.ke-god{font-size:12px;margin-top:2px;font-weight:bold}
-.ke-detail{font-size:10px;color:#555;margin-top:2px}
-.god-she{color:#6a1b9a}.god-zhu{color:#c62828}.god-he{color:#2e7d32}
-.god-gou{color:#e65100}.god-qing{color:#1565c0}.god-kong{color:#546e7a}
-.god-bai{color:#37474f}.god-chang{color:#00695c}.god-xuan{color:#1a237e}
-.god-yin{color:#4a148c}.god-hou{color:#880e4f}.god-gui{color:#f9a825}
-
-/* ── 中黄人遁 ── */
-.info-row{display:flex;gap:6px;margin-bottom:8px}
-.info-cell{flex:1;background:#fff8f0;border:1px solid #ddd;border-radius:4px;padding:4px 8px;text-align:center;font-size:12px}
-.info-cell .il{color:#888;font-size:10px}
-.info-cell .iv{color:#a02020;font-weight:bold;font-size:14px}
+.rp{background:#fcf0e0;border:1px solid #c0392b;border-radius:6px;padding:5px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.rp .r{font-size:10px;color:#8b1a1a}
+.rp .v{font-size:18px;font-weight:bold;color:#1a1a2e;letter-spacing:3px}
+.rp .s{font-size:11px;color:#666}
 
 /* ── 神煞标签 ── */
-.tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
-.tag{background:#fff;border:1px solid #ddd;border-radius:3px;padding:1px 6px;font-size:10px}
-.tag .tl{color:#999}.tag .tv{color:#333}
+.tag-b{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
+.tag{background:#fff;border:1px solid #e0d0c0;border-radius:3px;padding:1px 5px;font-size:10px;white-space:nowrap}
+.tag .tl{color:#999}
+.tag .tv{color:#333;font-weight:bold}
+
+/* ── 中黄人遁 ── */
+.zl{display:flex;gap:5px;margin-bottom:6px}
+.zl-item{flex:1;background:#fff;border:1px solid #e0d0c0;border-radius:4px;padding:3px 6px;text-align:center;font-size:12px}
+.zl-item .zll{color:#999;font-size:10px}
+.zl-item .zlv{color:#8b1a1a;font-weight:bold;font-size:13px}
+
+/* ── 四课核心盘面 ── */
+.ke-table{border:2px solid #8b1a1a;border-radius:6px;overflow:hidden;margin-bottom:6px;background:#fff}
+.ke-tr{display:grid;grid-template-columns:repeat(4,1fr)}
+.ke-tr.header{border-bottom:1px solid #d0c0b0}
+.ke-tr.header .kc{border-right:1px solid #e0d0c0;padding:4px;text-align:center;font-size:11px;color:#8b1a1a;font-weight:bold}
+.ke-tr.header .kc:last-child{border-right:none}
+.ke-tr.data .kc{padding:3px 4px;text-align:center;border-right:1px solid #f0e0d0;border-bottom:1px solid #f0e0d0}
+.ke-tr.data .kc:last-child{border-right:none}
+.ke-tr.data:last-child .kc{border-bottom:none}
+
+.kc .tp{font-size:17px;font-weight:bold;color:#1a1a2e;letter-spacing:1px}
+.kc .bt{font-size:13px;color:#555;margin-top:1px}
+.kc .god{font-size:12px;margin-top:1px;font-weight:bold}
+.kc .det{font-size:9px;color:#888;margin-top:1px;line-height:1.2}
+.kc .sx{font-size:9px;color:#aaa;margin-top:1px}
+
+/* 天将色 + 地支 */
+.g-she{color:#6a1b9a}.g-zhu{color:#c62828}.g-he{color:#2e7d32}
+.g-gou{color:#e65100}.g-qing{color:#1565c0}.g-kong{color:#546e7a}
+.g-bai{color:#37474f}.g-chang{color:#00695c}.g-xuan{color:#1a237e}
+.g-yin{color:#4a148c}.g-hou{color:#880e4f}.g-gui{color:#f9a825}
+
+/* ── 天盘五干 ── */
+.wg{background:#fff0e0;border:1px solid #c0392b;border-radius:4px;padding:5px 8px;margin-bottom:5px;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.wg .l{font-size:10px;color:#8b1a1a;font-weight:bold}
+.wg .item{background:#fff;border:1px solid #e0c0a0;border-radius:3px;padding:1px 6px;font-size:11px}
+.wg .item .il{color:#999}
+.wg .item .iv{color:#8b1a1a;font-weight:bold}
 
 /* ── 五行 ── */
-.wx{display:flex;gap:4px;margin:4px 0}
-.wx span{font-size:10px;padding:1px 6px;border-radius:3px}
-.wx-mu{background:#e8f5e9;color:#2e7d32}.wx-huo{background:#fbe9e7;color:#c62828}
-.wx-tu{background:#fff3e0;color:#e65100}.wx-jin{background:#f3e5f5;color:#6a1b9a}
-.wx-shui{background:#e3f2fd;color:#1565c0}
+.wx{display:flex;gap:3px;margin:4px 0}
+.wx span{font-size:10px;padding:1px 5px;border-radius:3px}
+.wx-huo{background:#fbe9e7;color:#c62828}.wx-tu{background:#fff3e0;color:#e65100}
+.wx-mu{background:#e8f5e9;color:#2e7d32}.wx-shui{background:#e3f2fd;color:#1565c0}
+.wx-jin{background:#f3e5f5;color:#6a1b9a}
 
-/* ── 神煞详细区 ── */
-.shensha-section{border-top:1px solid #e0d0c0;padding-top:6px;margin-top:4px}
-.shensha-title{font-size:11px;color:#a02020;font-weight:bold;margin-bottom:4px}
-@media(max-width:640px){.sizhu-panel{grid-template-columns:1fr}.ke-grid{grid-template-columns:repeat(2,1fr)}}
+/* ── 神煞明细 ── */
+.ss{border-top:1px solid #e0d0c0;padding-top:5px;margin-top:4px}
+.ss-t{font-size:11px;color:#8b1a1a;font-weight:bold;margin-bottom:3px}
+@media(max-width:640px){.sz-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
-<div class="header-row">
-  <div><h1>天星2.0</h1><div class="sub">大六壬 · 九天玄数 · 神煞集成</div></div>
-  <div style="text-align:right;font-size:11px;color:#888;line-height:1.5">
-    三传: 中黄 旬遁 月将<br>贵神 人遁 天遁
-  </div>
+<div class="top">
+<div><h1>天星2.0 · 大六壬</h1><div class="sub">九天玄数 · 太极辨证法 · 神煞集成</div></div>
+<div class="hint">三传: 中黄 旬遁 月将<br>贵神 人遁 天遁</div></div>
+<div class="sz-grid">
+<div class="sz-box"><div class="st">自选 四柱</div>
+<div class="sz-row"><span class="l">年</span><input value="丙午" placeholder="例:2024"><span class="l">月将</span><span class="sv">月将</span></div>
+<div class="sz-row"><span class="l">性别</span><span class="sv">女</span><span class="l">年份</span><span class="sv">2002</span></div>
+<div class="sz-row"><span class="l">本命</span><span class="sv">壬午</span><span class="l">行年</span><span class="sv">—</span></div>
+<div class="sz-note">删掉自选即为当下正时课</div></div>
+<div class="sz-box"><div class="st">排盘 四柱</div>
+<div class="sz-row"><span class="l">年</span><span class="sv r">丙午</span><span class="l">月</span><span class="sv r">癸巳</span></div>
+<div class="sz-row"><span class="l">日</span><span class="sv r">壬寅</span><span class="l">时</span><span class="sv r">丁未</span></div>
+<div class="sz-row"><span class="l">性别</span><span class="sv">男</span><span class="l">本命</span><span class="sv">己卯</span></div>
+<div class="sz-note">当下正时 : 丙午 癸巳 壬寅 丁未</div></div></div>
+<div class="rp"><div><div class="r">天星排盘 · 四柱</div><div class="s">丙午年 癸巳月 壬寅日 丁未时</div></div><div class="v">丙癸壬丁　午巳寅未</div></div>
+<div class="tag-b">
+<span class="tag"><span class="tl">日德</span><span class="tv"> 月德</span></span>
+<span class="tag"><span class="tl">大耗</span><span class="tv"> 天赦</span></span>
+<span class="tag"><span class="tl">将星</span><span class="tv"> 文昌</span></span>
+<span class="tag"><span class="tl">月德</span><span class="tv"> 成神</span></span>
+<span class="tag"><span class="tl">天赦</span><span class="tv"> 天喜</span></span>
+<span class="tag"><span class="tl">文昌</span><span class="tv"> 生气</span></span>
 </div>
-
-<!-- 自选四柱 / 排盘四柱 -->
-<div class="sizhu-panel">
-<div class="sizhu-box">
-<div class="stitle">自选 四柱</div>
-
-<div class="sizhu-row"><span class="sl">年</span><input value="女" placeholder="年"><span class="sv gold">2002</span></div>
-<div class="sizhu-row"><span class="sl">年</span><span class="sv">丙午</span></div>
-<div class="sizhu-row"><span class="sl">月</span><span class="sv">癸巳</span></div>
-<div class="sizhu-row"><span class="sl">日</span><span class="sv">壬寅</span></div>
-<div class="sizhu-row"><span class="sl">时</span><span class="sv">丁未</span></div>
-<div class="sizhu-row"><span class="sl">性别</span><span class="sv">女</span><span class="sl">年份</span><span class="sv">2002</span></div>
-<div class="sizhu-row"><span class="sl">本命</span><span class="sv">壬午</span><span class="sl">行年</span><span class="sv">—</span></div>
-<div class="sizhu-hint">自选四柱删掉即为当下正时课</div>
+<div class="zl">
+<div class="zl-item"><div class="zll">中黄</div><div class="zlv">中黄 复建</div></div>
+<div class="zl-item"><div class="zll">人遁</div><div class="zlv">人遁</div></div>
+<div class="zl-item"><div class="zll">天遁</div><div class="zlv">辰</div></div>
+<div class="zl-item"><div class="zll">旬遁</div><div class="zlv">甲午</div></div>
 </div>
-<div class="sizhu-box">
-<div class="stitle">排盘 四柱</div>
-<div class="sizhu-row"><span class="sl">年</span><span class="sv gold">丙午</span><span class="sl">月</span><span class="sv gold">癸巳</span></div>
-<div class="sizhu-row"><span class="sl">日</span><span class="sv gold">壬寅</span><span class="sl">时</span><span class="sv gold">丁未</span></div>
-<div class="sizhu-row"><span class="sl">月将</span><span class="sv">月将</span></div>
-<div class="sizhu-row"><span class="sl">本命</span><span class="sv">己卯</span></div>
-</div></div>
-<div class="result-bar">
-<div><div class="rlabel">天星排盘</div><div class="rsub">丙午年 癸巳月 壬寅日 丁未时</div></div>
-<div class="rval">丙癸壬丁 午巳寅未</div>
+<div class="ke-table">
+<div class="ke-tr header">
+<div class="kc">第一课</div>
+<div class="kc">第二课</div>
+<div class="kc">第三课</div>
+<div class="kc">第四课</div>
 </div>
-<div class="tag-row">
-<span class="tag"><span class="tl">日德</span> <span class="tv">月德</span></span>
-<span class="tag"><span class="tl">大耗</span> <span class="tv">天赦</span></span>
-<span class="tag"><span class="tl">将星</span> <span class="tv">文昌</span></span>
-<span class="tag"><span class="tl">月德</span> <span class="tv">成神</span></span>
-<span class="tag"><span class="tl">天赦</span> <span class="tv">天喜</span></span>
-<span class="tag"><span class="tl">文昌</span> <span class="tv">生气</span></span>
+<div class="ke-tr data">
+<div class="kc"><div class="tp">乙| 巳</div>
+<div class="det">天盘天干·地支</div></div>
+<div class="kc"><div class="tp">甲 午</div>
+<div class="det">天盘天干·地支</div></div>
+<div class="kc"><div class="tp">乙 未</div>
+<div class="det">天盘天干·地支</div></div>
+<div class="kc"><div class="tp">丙 申</div>
+<div class="det">天盘天干·地支</div></div>
 </div>
-<div class="info-row">
-<div class="info-cell"><div class="il">中黄</div><div class="iv">中黄 复建</div></div>
-<div class="info-cell"><div class="il">人遁</div><div class="iv">人遁</div></div>
-<div class="info-cell"><div class="il">天遁</div><div class="iv">辰</div></div>
-<div class="info-cell"><div class="il">旬遁</div><div class="iv">甲午</div></div>
+<div class="ke-tr data">
+<div class="kc"><div class="bt">丙 午</div>
+<div class="det">地盘天干·地支</div></div>
+<div class="kc"><div class="bt">丁 未</div>
+<div class="det">地盘天干·地支</div></div>
+<div class="kc"><div class="bt">戊 申</div>
+<div class="det">地盘天干·地支</div></div>
+<div class="kc"><div class="bt">己 酉</div>
+<div class="det">地盘天干·地支</div></div>
 </div>
-<div class="ke-grid">
-<div class="ke-cell">
-<div class="ke-label">第一课</div>
-<div class="ke-tian">乙|　午</div>
-<div class="ke-di">丙　朱</div>
-<div class="ke-god god-zhu">庚</div>
-<div class="ke-detail">昼翔     妻财</div>
+<div class="ke-tr data">
+<div class="kc"><div class="god g-zhu">朱</div>
+<div class="det">天将: 庚</div></div>
+<div class="kc"><div class="god g-he">合</div>
+<div class="det">天将: 辛</div></div>
+<div class="kc"><div class="god g-gou">勾</div>
+<div class="det">天将: 壬</div></div>
+<div class="kc"><div class="god g-qing">青</div>
+<div class="det">天将: 癸</div></div>
 </div>
-<div class="ke-cell">
-<div class="ke-label">第二课</div>
-<div class="ke-tian">甲　未</div>
-<div class="ke-di">丁　合</div>
-<div class="ke-god god-he">辛</div>
-<div class="ke-detail">升堂     妻财</div>
+<div class="ke-tr data">
+<div class="kc"><div class="sx">昼翔     妻财</div>
+<div class="det">长生: 胎 胎</div>
 </div>
-<div class="ke-cell">
-<div class="ke-label">第三课</div>
-<div class="ke-tian">乙　申</div>
-<div class="ke-di">戊　勾</div>
-<div class="ke-god god-gou">壬</div>
-<div class="ke-detail">入驿     官鬼</div>
+<div class="kc"><div class="sx">升堂     妻财</div>
+<div class="det">长生: 养 养</div>
 </div>
-<div class="ke-cell">
-<div class="ke-label">第四课</div>
-<div class="ke-tian">丙　酉</div>
-<div class="ke-di">己　青</div>
-<div class="ke-god god-qing">癸</div>
-<div class="ke-detail">伤鳞     父母</div>
+<div class="kc"><div class="sx">入驿     官鬼</div>
+<div class="det">长生: 长 长</div>
+</div>
+<div class="kc"><div class="sx">伤鳞     父母</div>
+<div class="det">长生: 沐 沐</div>
 </div>
 </div>
-<div style="text-align:center;font-size:11px;color:#666;margin-bottom:6px">
-天盘五干: 丙 庚 | 丁 辛 | 戊 壬 | 己 癸
+<div class="ke-tr data">
+<div class="kc"><div class="det" style="color:#666;font-size:11px">胜光</div></div>
+<div class="kc"><div class="det" style="color:#666;font-size:11px">小吉</div></div>
+<div class="kc"><div class="det" style="color:#666;font-size:11px">传送</div></div>
+<div class="kc"><div class="det" style="color:#666;font-size:11px">从魁</div></div>
+</div>
+</div>
+<div class="wg">
+<span class="l">天盘五干</span>
+<span class="item"><span class="il">日干</span> <span class="iv">丙</span></span>
+<span class="item"><span class="il">课1天盘</span> <span class="iv">乙|</span></span>
+<span class="item"><span class="il">课2天盘</span> <span class="iv">甲</span></span>
+<span class="item"><span class="il">课3天盘</span> <span class="iv">乙</span></span>
+<span class="item"><span class="il">课4天盘</span> <span class="iv">丙</span></span>
+<span class="item"><span class="il">课1地盘</span> <span class="iv">丙</span></span>
+<span class="item"><span class="il">课2地盘</span> <span class="iv">丁</span></span>
+<span class="item"><span class="il">课3地盘</span> <span class="iv">戊</span></span>
+<span class="item"><span class="il">课4地盘</span> <span class="iv">己</span></span>
+<span class="item" style="background:#fcf0e0"><span class="il">五鼠遁</span> <span class="iv">丙日 · 五鼠遁: 戊子起</span></span>
 </div>
 <div class="wx">
 <span class="wx-huo">日干: 丙</span>
@@ -157,20 +195,26 @@ body{font-family:'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;
 <span class="wx-mu">休: 木休</span><span class="wx-shui">囚: 水囚</span>
 <span class="wx-jin">死: 金死</span>
 </div>
-<div class="shensha-section">
-<div class="shensha-title">神煞明细</div>
-<div class="tag-row">
+<div class="ss"><div class="ss-t">神煞明细</div><div class="tag-b">
 <span class="tag"><span class="tl">亥</span> <span class="tv">庚</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">天赦</span></span>
 <span class="tag"><span class="tl">子</span> <span class="tv">甲午</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">文昌</span></span>
 <span class="tag"><span class="tl">午</span> <span class="tv">寅</span></span>
 <span class="tag"><span class="tl">亥</span> <span class="tv">寅</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">天喜</span></span>
 <span class="tag"><span class="tl">子</span> <span class="tv">丑</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">生气</span></span>
 <span class="tag"><span class="tl">午</span> <span class="tv">卯</span></span>
 <span class="tag"><span class="tl">亥</span> <span class="tv">辛</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">孤辰</span></span>
 <span class="tag"><span class="tl">子</span> <span class="tv">申</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">劫煞</span></span>
 <span class="tag"><span class="tl">午</span> <span class="tv">亥</span></span>
 <span class="tag"><span class="tl">亥</span> <span class="tv">未</span></span>
+<span class="tag"><span class="tl">大耗</span> <span class="tv">寡宿</span></span>
 <span class="tag"><span class="tl">子</span> <span class="tv">辰</span></span>
+<span class="tag"><span class="tl">将星</span> <span class="tv">丧车</span></span>
 <span class="tag"><span class="tl">午</span> <span class="tv">子</span></span>
 <span class="tag"><span class="tl">亥</span> <span class="tv">卯丙</span></span>
 <span class="tag"><span class="tl">大耗</span> <span class="tv">天喜   天耳</span></span>
@@ -235,5 +279,5 @@ body{font-family:'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;
 <span class="tag"><span class="tl">将星</span> <span class="tv">年墓</span></span>
 <span class="tag"><span class="tl">午</span> <span class="tv">丑</span></span>
 </div></div>
-<div style="text-align:center;color:#bbb;font-size:10px;margin-top:10px;padding:8px 0">天星2.0 · 霎哈嘉瑜伽修习者</div>
+<div style="text-align:center;color:#ccc;font-size:10px;margin-top:8px;padding:6px 0">天星2.0 · 霎哈嘉瑜伽修习者</div>
 </div></body></html>
